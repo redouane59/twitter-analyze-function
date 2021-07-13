@@ -10,6 +10,8 @@ import io.github.redouane59.twitter.signature.TwitterCredentials;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,26 +20,43 @@ public class TweetAnalyzer implements HttpFunction {
 
   public final static String TWEET_ID = "tweet_id";
 
-  private       TwitterClient twitterClient;
-  private final InfoBuilder   infoBuilder;
+  private TwitterClient twitterClient;
+  private InfoBuilder   infoBuilder;
 
   public TweetAnalyzer() {
-    File file = new File("../twitter-credentials.json");
+
+    File file = new File("src/main/resources/test-twitter-credentials.json");
     if (!file.exists()) {
       LOGGER.error("credentials file not found");
+      LOGGER.error("src exists ? : " + new File("src").exists());
+      LOGGER.error("src/main exists ? : " + new File("src/main").exists());
+      LOGGER.error("src/main/resources exists ? : " + new File("src/main/resources").exists());
+      LOGGER.error("src/main/resources/test-twitter-credentials.json exists ? : "
+                   + new File("src/main/resources/test-twitter-credentials.json").exists());
+      LOGGER.error("src/main/resources/influents_users.json exists ? : "
+                   + new File("src/main/resources/influents_users.json").exists());
+      return;
     }
     try {
       twitterClient = new TwitterClient(TwitterClient.OBJECT_MAPPER.readValue(file, TwitterCredentials.class));
+      LOGGER.info("twitterClient initialized with success");
     } catch (IOException e) {
       LOGGER.error("failed reading crendentials file " + e.getMessage());
     }
     infoBuilder = new InfoBuilder(twitterClient);
   }
 
-
   @Override
   public void service(HttpRequest request, HttpResponse response) throws Exception {
     BufferedWriter writer = response.getWriter();
+
+    LOGGER.debug("params:");
+    for (Entry<String, List<String>> entry : request.getQueryParameters().entrySet()) {
+      LOGGER.info("key " + entry.getKey());
+      if (entry.getValue() != null && entry.getValue().size() > 0) {
+        LOGGER.info("value " + entry.getValue().get(0));
+      }
+    }
 
     Optional<String> tweetId = request.getFirstQueryParameter(TWEET_ID);
     if (tweetId.isEmpty()) {
@@ -58,3 +77,5 @@ public class TweetAnalyzer implements HttpFunction {
 
 
 }
+
+// gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 512MB --allow-unauthenticated

@@ -19,12 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 public class InfoBuilder {
 
   private final        TwitterClient      twitterClient;
-  private final        List<InfluentUser> influentUsers;
   private final static ObjectMapper       OBJECT_MAPPER = new ObjectMapper();
+  private static final List<InfluentUser> influentUsers = importInfluentUser("influents_users.json");
 
   public InfoBuilder(TwitterClient twitterClient) {
     this.twitterClient = twitterClient;
-    influentUsers      = importInfluentUser("influents_users.json");
   }
 
   public static List<InfluentUser> importInfluentUser(String userName) {
@@ -52,7 +51,7 @@ public class InfoBuilder {
 
     // likes
     UserList likers = twitterClient.getLikingUsers(tweet.getId());
-    if (likers.getData() != null) {
+    if (likers.getData() != null && influentUsers.size() > 0) {
       // influenceurs
       LinkedHashMap<InfluentUser, Integer> mostFollowedInfluencers = getMostFollowedInfluencers(likers.getData());
       int                                  i                       = 0;
@@ -60,7 +59,9 @@ public class InfoBuilder {
       text.append("\n\n[Most followed famous accounts by liking users]");
       for (Map.Entry<InfluentUser, Integer> entry : mostFollowedInfluencers.entrySet()) {
         if (i < maxValue) {
-          text.append("\n@").append(entry.getKey().getName()).append(" -> ").append(entry.getValue());
+          int nbFollows = entry.getValue();
+          text.append("\n@").append(entry.getKey().getName())
+              .append(" -> ").append(100 * nbFollows / likers.getData().size() + "%").append(" matches ");
           i++;
         } else {
           break;

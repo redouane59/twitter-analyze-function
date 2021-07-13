@@ -4,7 +4,8 @@ target/
 .idea
 *.asc
 bundle.jar
-test-twitter-credentials.json 
+src/main/resources/test-twitter-credentials.json
+src/main/resources/test-twitter-credentials2.json
 src/main/resources/users/*
 /.vscode
 /.settings

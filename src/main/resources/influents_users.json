@@ -1,5 +1,11 @@
 [
   {
+    "name": "NicolasBay_",
+    "id": "2443718293",
+    "group": "RN",
+    "orientation": "EX_DROITE"
+  },
+  {
     "name": "MLP_officiel",
     "id": "217749896",
     "group": "RN",
@@ -62,12 +68,6 @@
   {
     "name": "JulienOdoul",
     "id": "440914834",
-    "group": "RN",
-    "orientation": "EX_DROITE"
-  },
-  {
-    "name": "NicolasBay_",
-    "id": "2443718293",
     "group": "RN",
     "orientation": "EX_DROITE"
   },
