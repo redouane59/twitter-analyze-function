@@ -14,6 +14,7 @@ import io.github.redouane59.RelationType;
 import io.github.redouane59.twitter.dto.user.UserV2;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import lombok.Getter;
@@ -43,30 +44,35 @@ public class InfluentUser extends UserV2 {
     if (file.exists()) {
       loadFollowerOffline(file);
     } else {
-      LOGGER.debug("no offline followers found");
+      file = new File("src/main/resources/" + getName() + ".json");
+      if (file.exists()) {
+        loadFollowerOffline(file);
+      }
       loadFollowerOnline();
     }
   }
 
   private void loadFollowerOffline(File file) {
+    LOGGER.debug("loading followers offline");
     try {
-      followerIds = new HashSet<String>(List.of(OBJECT_MAPPER.readValue(file, String[].class)));
+      followerIds = new HashSet<>(List.of(OBJECT_MAPPER.readValue(file, String[].class)));
     } catch (IOException ioException) {
       LOGGER.error(ioException.getMessage());
     }
   }
 
   private void loadFollowerOnline() {
+    LOGGER.debug("loading followers online");
     followerIds = new HashSet<>();
-    /*
     String jsonUrl = "https://github.com/redouane59/twitter-accounts-data/raw/master/users/followers/" + getName() + ".json";
     try {
+      //  @todo cache it
       followerIds = new HashSet<>(List.of(OBJECT_MAPPER.readValue(new URL(jsonUrl), String[].class)));
-      LOGGER.info(getName() + " loaded with success");
+      LOGGER.info(getName() + " loaded online with success");
     } catch (IOException ioException) {
       LOGGER.error("failed loading " + getName() + " : " + ioException.getMessage());
-      ioException.printStackTrace();
-    } */
+      // ioException.printStackTrace();
+    }
   }
 
   public boolean isFollowedByUser(String userId) {

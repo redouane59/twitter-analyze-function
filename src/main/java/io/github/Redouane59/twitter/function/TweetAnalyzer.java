@@ -1,9 +1,11 @@
 package io.github.Redouane59.twitter.function;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.functions.HttpFunction;
 import com.google.cloud.functions.HttpRequest;
 import com.google.cloud.functions.HttpResponse;
-import io.github.Redouane59.twitter.model.InfoBuilder;
+import io.github.Redouane59.twitter.model.InfluentUser;
+import io.github.Redouane59.twitter.model.ResponseBuilder;
 import io.github.redouane59.twitter.TwitterClient;
 import io.github.redouane59.twitter.dto.tweet.Tweet;
 import io.github.redouane59.twitter.signature.TwitterCredentials;
@@ -20,21 +22,16 @@ public class TweetAnalyzer implements HttpFunction {
 
   public final static String TWEET_ID = "tweet_id";
 
-  private TwitterClient twitterClient;
-  private InfoBuilder   infoBuilder;
+  private              TwitterClient      twitterClient;
+  private              ResponseBuilder    responseBuilder;
+  private final static ObjectMapper       OBJECT_MAPPER  = new ObjectMapper();
+  public static final  List<InfluentUser> INFLUENT_USERS = importInfluentUser("influents_users.json");
 
   public TweetAnalyzer() {
 
     File file = new File("src/main/resources/test-twitter-credentials.json");
     if (!file.exists()) {
       LOGGER.error("credentials file not found");
-      LOGGER.error("src exists ? : " + new File("src").exists());
-      LOGGER.error("src/main exists ? : " + new File("src/main").exists());
-      LOGGER.error("src/main/resources exists ? : " + new File("src/main/resources").exists());
-      LOGGER.error("src/main/resources/test-twitter-credentials.json exists ? : "
-                   + new File("src/main/resources/test-twitter-credentials.json").exists());
-      LOGGER.error("src/main/resources/influents_users.json exists ? : "
-                   + new File("src/main/resources/influents_users.json").exists());
       return;
     }
     try {
@@ -43,7 +40,21 @@ public class TweetAnalyzer implements HttpFunction {
     } catch (IOException e) {
       LOGGER.error("failed reading crendentials file " + e.getMessage());
     }
-    infoBuilder = new InfoBuilder(twitterClient);
+    responseBuilder = new ResponseBuilder(twitterClient);
+  }
+
+  public static List<InfluentUser> importInfluentUser(String userName) {
+    File file = new File("src/main/resources/" + userName);
+    if (file.exists()) {
+      try {
+        return List.of(OBJECT_MAPPER.readValue(file, InfluentUser[].class));
+      } catch (Exception e) {
+        LOGGER.error(" user importation KO ! " + e.getMessage());
+      }
+    } else {
+      LOGGER.error("file not found");
+    }
+    return null;
   }
 
   @Override
@@ -71,11 +82,13 @@ public class TweetAnalyzer implements HttpFunction {
       return;
     }
 
-    writer.write(infoBuilder.getText(tweet));
+    writer.write(OBJECT_MAPPER.writeValueAsString(responseBuilder.getResponse(tweet)));
+
+    LOGGER.debug("finished");
 
   }
 
 
 }
 
-// gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 512MB --allow-unauthenticated
+// gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 4096MB --timeout=540 --allow-unauthenticated

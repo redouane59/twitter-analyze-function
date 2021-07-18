@@ -1,350 +1,446 @@
 [
   {
-    "name": "NicolasBay_",
-    "id": "2443718293",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "name": "RNational_off",
+    "id": 78085410
+  },
+  {
+    "name": "GroupeID_FR",
+    "id": 4782667416
   },
   {
     "name": "MLP_officiel",
-    "id": "217749896",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 217749896
   },
   {
     "name": "MarionMarechal",
-    "id": "520449734",
-    "group": "RN",
-    "orientation": "EX_DROITE"
-  },
-  {
-    "name": "RNational_off",
-    "id": "78085410",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 520449734
   },
   {
     "name": "GilbertCollard",
-    "id": "471163803",
-    "group": "RN",
-    "orientation": "EX_DROITE"
-  },
-  {
-    "name": "dupontaignan",
-    "id": "38170599",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 471163803
   },
   {
     "name": "f_philippot",
-    "id": "472412809",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 472412809
   },
   {
     "name": "J_Bardella",
-    "id": "1499400284",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 1499400284
   },
   {
     "name": "DamienRieu",
-    "id": "978184280",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 978184280
   },
   {
     "name": "JeanMessiha",
-    "id": "456777022",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 456777022
   },
   {
     "name": "RobertMenardFR",
-    "id": "1132342340",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 1132342340
   },
   {
     "name": "JulienOdoul",
-    "id": "440914834",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "id": 440914834
   },
   {
-    "name": "BallardPhilippe",
-    "id": "1030167852",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "name": "NicolasBay_",
+    "id": 2443718293
   },
   {
-    "name": "SteeveBriois",
-    "id": "498983436",
-    "group": "RN",
-    "orientation": "EX_DROITE"
+    "name": "louis_aliot",
+    "id": 316956459
   },
   {
-    "name": "Anne_Hidalgo",
-    "id": "26073581",
-    "group": "PS",
-    "orientation": "GAUCHE"
+    "name": "DLF_Officiel",
+    "id": 1435970071
   },
   {
-    "name": "najatvb",
-    "id": "79145543",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "ChTaubira",
-    "id": "93484066",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "RoyalSegolene",
-    "id": "69032746",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "partisocialiste",
-    "id": "19900973",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "benoithamon",
-    "id": "14389177",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "rglucks1",
-    "id": "2967623435",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "MartineAubry",
-    "id": "26031424",
-    "group": "PS",
-    "orientation": "GAUCHE"
-  },
-  {
-    "name": "EPhilippe_LH",
-    "id": "1110890216",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "BrunoLeMaire",
-    "id": "374184532",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "CCastaner",
-    "id": "125727024",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "olivierveran",
-    "id": "600345740",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "GDarmanin",
-    "id": "209825928",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "BCazeneuve",
-    "id": "427288938",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "MarleneSchiappa",
-    "id": "14237828",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "GabrielAttal",
-    "id": "379718466",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "AgnesRunacher",
-    "id": "2400052052",
-    "group": "LREM",
-    "orientation": "CENTRE"
-  },
-  {
-    "name": "NicolasSarkozy",
-    "id": "490126636",
-    "group": "LR",
-    "orientation": "DROITE"
-  },
-  {
-    "name": "alainjuppe",
-    "id": "258345629",
-    "group": "LR",
-    "orientation": "DROITE"
-  },
-  {
-    "name": "nk_m",
-    "id": "20702279",
-    "group": "LR",
-    "orientation": "DROITE"
-  },
-  {
-    "name": "FrancoisFillon",
-    "id": "551669623",
-    "group": "LR",
-    "orientation": "DROITE"
-  },
-  {
-    "name": "vpecresse",
-    "id": "49969223",
-    "group": "LR",
-    "orientation": "DROITE"
-  },
-  {
-    "name": "laurentwauquiez",
-    "id": "19438626",
-    "group": "LR",
-    "orientation": "DROITE"
-  },
-  {
-    "name": "jf_cope",
-    "id": "105116603",
-    "group": "LR",
-    "orientation": "DROITE"
+    "name": "dupontaignan",
+    "id": 38170599
   },
   {
     "name": "lesRepublicains",
-    "id": "95455794",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 95455794
+  },
+  {
+    "name": "NicolasSarkozy",
+    "id": 490126636
+  },
+  {
+    "name": "alainjuppe",
+    "id": 258345629
+  },
+  {
+    "name": "nk_m",
+    "id": 20702279
+  },
+  {
+    "name": "FrancoisFillon",
+    "id": 551669623
+  },
+  {
+    "name": "vpecresse",
+    "id": 49969223
+  },
+  {
+    "name": "laurentwauquiez",
+    "id": 19438626
+  },
+  {
+    "name": "jf_cope",
+    "id": 105116603
   },
   {
     "name": "nadine__morano",
-    "id": "413839619",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 413839619
   },
   {
     "name": "xavierbertrand",
-    "id": "17172319",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 17172319
   },
   {
     "name": "cestrosi",
-    "id": "83784709",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 83784709
   },
   {
     "name": "ECiotti",
-    "id": "87886754",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 87886754
   },
   {
     "name": "LydiaGuirous",
-    "id": "29960578",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 29960578
   },
   {
     "name": "Meyer_Habib",
-    "id": "1851724262",
-    "group": "LR",
-    "orientation": "DROITE"
+    "id": 1851724262
   },
   {
-    "name": "damienabad",
-    "id": "76584619",
-    "group": "LR",
-    "orientation": "EX_DROITE"
+    "name": "EnMarcheFr",
+    "id": 4813171035
   },
   {
-    "name": "JLMelenchon",
-    "id": "80820758",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
+    "name": "EPhilippe_LH",
+    "id": 1110890216
   },
   {
-    "name": "Francois_Ruffin",
-    "id": "801822323825410049",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
+    "name": "BrunoLeMaire",
+    "id": 374184532
   },
   {
-    "name": "Clem_Autain",
-    "id": "491343921",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
+    "name": "CCastaner",
+    "id": 125727024
   },
   {
-    "name": "Deputee_Obono",
-    "id": "858041350494793728",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
+    "name": "olivierveran",
+    "id": 600345740
   },
   {
-    "name": "AQuatennens",
-    "id": "3023497329",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
+    "name": "GDarmanin",
+    "id": 209825928
+  },
+  {
+    "name": "BCazeneuve",
+    "id": 427288938
+  },
+  {
+    "name": "MarleneSchiappa",
+    "id": 14237828
+  },
+  {
+    "name": "GabrielAttal",
+    "id": 379718466
+  },
+  {
+    "name": "StanGuerini",
+    "id": 1911591212
+  },
+  {
+    "name": "manuelvalls",
+    "id": 70385068
+  },
+  {
+    "name": "jmblanquer",
+    "id": 360019007
+  },
+  {
+    "name": "JeanCASTEX",
+    "id": 119081177
+  },
+  {
+    "name": "Aurelientache",
+    "id": 472903732
+  },
+  {
+    "name": "partisocialiste",
+    "id": 19900973
+  },
+  {
+    "name": "Anne_Hidalgo",
+    "id": 26073581
+  },
+  {
+    "name": "najatvb",
+    "id": 79145543
+  },
+  {
+    "name": "ChTaubira",
+    "id": 93484066
+  },
+  {
+    "name": "RoyalSegolene",
+    "id": 69032746
+  },
+  {
+    "name": "benoithamon",
+    "id": 14389177
+  },
+  {
+    "name": "rglucks1",
+    "id": 2967623435
+  },
+  {
+    "name": "MartineAubry",
+    "id": 26031424
+  },
+  {
+    "name": "socialistesAN",
+    "id": 201737230
+  },
+  {
+    "name": "EELV",
+    "id": 17710206
   },
   {
     "name": "EstherBenbassa",
-    "id": "414024815",
-    "group": "EELV",
-    "orientation": "EX_GAUCHE"
+    "id": 414024815
   },
   {
-    "name": "yjadot",
-    "id": "117761523",
-    "group": "EELV",
-    "orientation": "EX_GAUCHE"
+    "name": "FranceInsoumise",
+    "id": 4897361049
+  },
+  {
+    "name": "JLMelenchon",
+    "id": 80820758
+  },
+  {
+    "name": "Francois_Ruffin",
+    "id": 801822323825410000
+  },
+  {
+    "name": "Clem_Autain",
+    "id": 491343921
+  },
+  {
+    "name": "Deputee_Obono",
+    "id": 858041350494793700
+  },
+  {
+    "name": "AQuatennens",
+    "id": 3023497329
   },
   {
     "name": "GuiraudInd",
-    "id": "427246481",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
-  },
-  {
-    "name": "IanBrossat",
-    "id": "204368725",
-    "group": "PCF",
-    "orientation": "EX_GAUCHE"
+    "id": 427246481
   },
   {
     "name": "fabien_gay",
-    "id": "914080853822754816",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
-  },
-  {
-    "name": "MadjidFalastine",
-    "id": "39083212",
-    "group": "PCF",
-    "orientation": "EX_GAUCHE"
+    "id": 914080853822754800
   },
   {
     "name": "ericcoquerel",
-    "id": "311601642",
-    "group": "FI",
-    "orientation": "EX_GAUCHE"
+    "id": 311601642
+  },
+  {
+    "name": "ManonAubryFr",
+    "id": 2850651695
+  },
+  {
+    "name": "PCF",
+    "id": 96090970
+  },
+  {
+    "name": "IanBrossat",
+    "id": 204368725
+  },
+  {
+    "name": "MadjidFalastine",
+    "id": 39083212
+  },
+  {
+    "name": "NPA_officiel",
+    "id": 2273166283
+  },
+  {
+    "name": "PhilippePoutou",
+    "id": 374392774
+  },
+  {
+    "name": "T_Bouhafs",
+    "id": 835174698623336400
+  },
+  {
+    "name": "ZemmourEric",
+    "id": 1183418538285027300
+  },
+  {
+    "name": "RokhayaDiallo",
+    "id": 46375782
+  },
+  {
+    "name": "_MarwanMuhammad",
+    "id": 531383314
+  },
+  {
+    "name": "FeizaBM",
+    "id": 700044567
+  },
+  {
+    "name": "s_assbague",
+    "id": 1496216082
+  },
+  {
+    "name": "RemyBuisine",
+    "id": 1643934410
+  },
+  {
+    "name": "fabricearfi",
+    "id": 89784381
+  },
+  {
+    "name": "davidperrotin",
+    "id": 233532563
+  },
+  {
+    "name": "anatolium",
+    "id": 170404151
+  },
+  {
+    "name": "N_Henin",
+    "id": 295692501
+  },
+  {
+    "name": "IdrissSihamedi",
+    "id": 3065659479
+  },
+  {
+    "name": "ncadene",
+    "id": 17872283
+  },
+  {
+    "name": "AnasseKazib",
+    "id": 388972391
+  },
+  {
+    "name": "askolovitchC",
+    "id": 22276825
+  },
+  {
+    "name": "jmaphatie",
+    "id": 369914677
+  },
+  {
+    "name": "ZinebElRhazoui",
+    "id": 789773474114011100
+  },
+  {
+    "name": "ZohraBitan",
+    "id": 194173066
+  },
+  {
+    "name": "ivanrioufol",
+    "id": 73383656
+  },
+  {
+    "name": "RenaudCamus",
+    "id": 1044928850
+  },
+  {
+    "name": "GWGoldnadel",
+    "id": 3373762791
+  },
+  {
+    "name": "Enthoven_R",
+    "id": 1900027512
+  },
+  {
+    "name": "AlexDevecchio",
+    "id": 87156428
+  },
+  {
+    "name": "MajidOukacha",
+    "id": 3189619742
+  },
+  {
+    "name": "SJallamion",
+    "id": 3354964647
+  },
+  {
+    "name": "Sifaoui",
+    "id": 53224286
+  },
+  {
+    "name": "AgagBoudjahlat",
+    "id": 1081997378310336500
+  },
+  {
+    "name": "julienbahloul",
+    "id": 103223236
+  },
+  {
+    "name": "arnoklarsfeld",
+    "id": 92955858
+  },
+  {
+    "name": "ELevyCauseur",
+    "id": 2912784123
+  },
+  {
+    "name": "LeaSalame",
+    "id": 370854282
+  },
+  {
+    "name": "FrancisKalifat",
+    "id": 702855392380977200
+  },
+  {
+    "name": "frhaz",
+    "id": 111816507
+  },
+  {
+    "name": "CarolineFourest",
+    "id": 49292117
+  },
+  {
+    "name": "W_Alhusseini",
+    "id": 493391629
+  },
+  {
+    "name": "alexdelvalle3",
+    "id": 1156774764
+  },
+  {
+    "name": "LaurentBouvet",
+    "id": 76103961
+  },
+  {
+    "name": "Aminelkhatmi",
+    "id": 47336512
+  },
+  {
+    "name": "GillesClavreul",
+    "id": 58913635
+  },
+  {
+    "name": "_LICRA_",
+    "id": 194027573
+  },
+  {
+    "name": "edwyplenel",
+    "id": 47399805
+  },
+  {
+    "name": "KhanNRachel",
+    "id": 566749548
   }
 ]
