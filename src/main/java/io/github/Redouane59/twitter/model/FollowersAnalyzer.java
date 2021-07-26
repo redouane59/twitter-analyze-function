@@ -1,12 +1,11 @@
 package io.github.Redouane59.twitter.model;
 
-import io.github.Redouane59.twitter.function.TweetAnalyzer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.redouane59.twitter.TwitterClient;
 import io.github.redouane59.twitter.dto.tweet.Tweet;
-import io.github.redouane59.twitter.dto.tweet.TweetList;
 import io.github.redouane59.twitter.dto.user.User;
 import io.github.redouane59.twitter.dto.user.UserList;
-import java.text.DecimalFormat;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -15,12 +14,16 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ResponseBuilder {
+public class FollowersAnalyzer {
 
-  private final TwitterClient twitterClient;
+  private final       TwitterClient      twitterClient;
+  public final static ObjectMapper       OBJECT_MAPPER = new ObjectMapper();
+  public final        List<InfluentUser> INFLUENT_USERS;
 
-  public ResponseBuilder(TwitterClient twitterClient) {
+
+  public FollowersAnalyzer(TwitterClient twitterClient, String influencerFilePath) {
     this.twitterClient = twitterClient;
+    INFLUENT_USERS     = importInfluentUser(influencerFilePath);
   }
 
   public AnalyzeResponse getResponse(Tweet tweet) {
@@ -28,7 +31,7 @@ public class ResponseBuilder {
 
     // likes
     UserList likers = twitterClient.getLikingUsers(tweet.getId());
-    if (likers.getData() != null && TweetAnalyzer.INFLUENT_USERS.size() > 0) {
+    if (likers.getData() != null && INFLUENT_USERS.size() > 0) {
       // influenceurs
       LinkedHashMap<String, Integer> mostFollowedInfluencers = getMostFollowedInfluencers(likers.getData());
       int                            i                       = 0;
@@ -49,18 +52,6 @@ public class ResponseBuilder {
       analyzeResponse.setMostFollowedInfluencers(mostFollowedInfluencers);
       analyzeResponse.setUserStatistics(UserStatisticsCollector.getUserStatistics(likers.getData()));
     }
-    
-        /*
-    // retweets
-    List<String> retweeterIds = twitterClient.getRetweetersId(tweet.getId());
-    text += getTextFromUserList(twitterClient.getUsersFromUserIds(retweeterIds), "Retweeting users");
-    text += "\n";
-
-    // mentions
-    List<? extends User> answerers = searchForAnswerers(tweet);
-    text += getTextFromUserList(answerers, "Answering users");
-    text += "\n";
-     */
 
     return analyzeResponse;
   }
@@ -73,10 +64,9 @@ public class ResponseBuilder {
            .forEachOrdered(e -> m.put(e.getKey(), e.getValue()));
   }
 
-
-  private LinkedHashMap<String, Integer> getMostFollowedInfluencers(List<? extends User> users) {
+  public LinkedHashMap<String, Integer> getMostFollowedInfluencers(List<? extends User> users) {
     LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
-    for (InfluentUser influentUser : TweetAnalyzer.INFLUENT_USERS) {
+    for (InfluentUser influentUser : INFLUENT_USERS) {
       if (influentUser.getId().isEmpty()) {
         String userId = twitterClient.getUserFromUserName(influentUser.getName()).getId();
         influentUser.getData().setId(userId);
@@ -95,25 +85,17 @@ public class ResponseBuilder {
 
   }
 
-  private String getTextFromUserList(List<? extends User> users, String methodName) {
-    String         text           = "";
-    UserStatistics userStatistics = UserStatisticsCollector.getUserStatistics(users);
-    text += "\n[" + methodName + "] median tweets count : " + userStatistics.getTweetCountMedian();
-    text += "\n[" + methodName + "] median followers count : " + userStatistics.getFollowersCountMedian();
-    text += "\n[" + methodName + "] median following count : " + userStatistics.getFollowingsCountMedian();
-    text += "\n[" + methodName + "] median ratio : " + new DecimalFormat("##.##").format(userStatistics.getFollowerRatioMedian());
-    text += "\n[" + methodName + "] median accounts age (years) : " + new DecimalFormat("##.##").format(userStatistics.getAccountAgeMedian());
-    return text;
-  }
-
-  private List<? extends User> searchForAnswerers(Tweet tweet) {
-    List<User> users  = new ArrayList<>();
-    String     query  = "conversation_id:" + tweet.getId() + " to:" + tweet.getUser().getName();
-    TweetList  result = twitterClient.searchTweets(query);
-    for (Tweet t : result.getData()) {
-      User user = twitterClient.getUserFromUserId(t.getAuthorId());
-      users.add(user);
+  public static List<InfluentUser> importInfluentUser(String filePath) {
+    File file = new File(filePath);
+    if (file.exists()) {
+      try {
+        return List.of(OBJECT_MAPPER.readValue(file, InfluentUser[].class));
+      } catch (Exception e) {
+        LOGGER.error(" user importation KO ! " + e.getMessage());
+      }
+    } else {
+      LOGGER.error("file not found");
     }
-    return users;
+    return null;
   }
 }

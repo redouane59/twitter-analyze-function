@@ -1,11 +1,9 @@
 package io.github.Redouane59.twitter.function;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.functions.HttpFunction;
 import com.google.cloud.functions.HttpRequest;
 import com.google.cloud.functions.HttpResponse;
-import io.github.Redouane59.twitter.model.InfluentUser;
-import io.github.Redouane59.twitter.model.ResponseBuilder;
+import io.github.Redouane59.twitter.model.FollowersAnalyzer;
 import io.github.redouane59.twitter.TwitterClient;
 import io.github.redouane59.twitter.dto.tweet.Tweet;
 import io.github.redouane59.twitter.signature.TwitterCredentials;
@@ -22,10 +20,8 @@ public class TweetAnalyzer implements HttpFunction {
 
   public final static String TWEET_ID = "tweet_id";
 
-  private              TwitterClient      twitterClient;
-  private              ResponseBuilder    responseBuilder;
-  private final static ObjectMapper       OBJECT_MAPPER  = new ObjectMapper();
-  public static final  List<InfluentUser> INFLUENT_USERS = importInfluentUser("influents_users.json");
+  private TwitterClient     twitterClient;
+  private FollowersAnalyzer followersAnalyzer;
 
   public TweetAnalyzer() {
 
@@ -40,21 +36,7 @@ public class TweetAnalyzer implements HttpFunction {
     } catch (IOException e) {
       LOGGER.error("failed reading crendentials file " + e.getMessage());
     }
-    responseBuilder = new ResponseBuilder(twitterClient);
-  }
-
-  public static List<InfluentUser> importInfluentUser(String userName) {
-    File file = new File("src/main/resources/" + userName);
-    if (file.exists()) {
-      try {
-        return List.of(OBJECT_MAPPER.readValue(file, InfluentUser[].class));
-      } catch (Exception e) {
-        LOGGER.error(" user importation KO ! " + e.getMessage());
-      }
-    } else {
-      LOGGER.error("file not found");
-    }
-    return null;
+    followersAnalyzer = new FollowersAnalyzer(twitterClient, "src/main/resources/influents_users.json");
   }
 
   @Override
@@ -82,7 +64,7 @@ public class TweetAnalyzer implements HttpFunction {
       return;
     }
 
-    writer.write(OBJECT_MAPPER.writeValueAsString(responseBuilder.getResponse(tweet)));
+    writer.write(FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getResponse(tweet)));
 
     LOGGER.debug("finished");
 
@@ -91,4 +73,5 @@ public class TweetAnalyzer implements HttpFunction {
 
 }
 
-// gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 4096MB --timeout=540 --allow-unauthenticated
+// add iron__manxxx
+// gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 8192MB --timeout=540 --allow-unauthenticated
