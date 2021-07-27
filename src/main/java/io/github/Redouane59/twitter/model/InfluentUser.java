@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import io.github.Redouane59.twitter.function.FollowerFilesManager;
 import io.github.redouane59.RelationType;
 import io.github.redouane59.twitter.dto.user.UserV2;
 import java.io.File;
@@ -33,6 +34,7 @@ public class InfluentUser extends UserV2 {
 
   private              HashSet<String> followerIds   = new HashSet<>();
   private final static ObjectMapper    OBJECT_MAPPER = new ObjectMapper();
+  private static final String          LOCAL_PATH    = "src/main/resources/users/followers/";
 
   public InfluentUser(String name, String id) {
     setData(UserData.builder().id(id).name(name).build());
@@ -40,38 +42,50 @@ public class InfluentUser extends UserV2 {
   }
 
   private void loadFollowerIds() {
-    File file = new File("../twitter-accounts-data/users/followers/" + getName() + ".json");
+    File file = new File(LOCAL_PATH + getName() + ".json");
     if (file.exists()) {
       loadFollowerOffline(file);
     } else {
-      file = new File("src/main/resources/" + getName() + ".json");
-      if (file.exists()) {
-        loadFollowerOffline(file);
-      }
-      loadFollowerOnline();
+      loadFollowersOnlineFromStorage();
     }
   }
 
   private void loadFollowerOffline(File file) {
-    LOGGER.debug("loading followers offline");
     try {
+      LOGGER.info("loading followers offline to : " + file.getName());
       followerIds = new HashSet<>(List.of(OBJECT_MAPPER.readValue(file, String[].class)));
     } catch (IOException ioException) {
       LOGGER.error(ioException.getMessage());
     }
   }
 
-  private void loadFollowerOnline() {
-    LOGGER.debug("loading followers online");
+  private void loadFollowersOnlineFromStorage() {
+    LOGGER.debug("loading followers from Storage");
+    followerIds = new HashSet<>();
+    String followerUrl = FollowerFilesManager.getFollowerFileUrl(getName());
+    if (followerUrl == null) { // @todo to remove after
+      LOGGER.error("url null from storage for " + getName());
+      loadFollowersOnlineFromGitHub();
+      return;
+    }
+    try {
+      LOGGER.info("downloading followers from STORAGE to : " + getName() + ".json");
+      followerIds = OBJECT_MAPPER.readValue(followerUrl, HashSet.class);
+    } catch (IOException ioException) {
+      LOGGER.error("failed downloading " + getName() + ".json : " + ioException.getMessage());
+      loadFollowersOnlineFromGitHub(); // @todo to remove
+    }
+  }
+
+  private void loadFollowersOnlineFromGitHub() {
+    LOGGER.debug("loading followers from GitHub");
     followerIds = new HashSet<>();
     String jsonUrl = "https://github.com/redouane59/twitter-accounts-data/raw/master/users/followers/" + getName() + ".json";
     try {
-      //  @todo cache it
-      followerIds = new HashSet<>(List.of(OBJECT_MAPPER.readValue(new URL(jsonUrl), String[].class)));
+      followerIds = OBJECT_MAPPER.readValue(new URL(jsonUrl), HashSet.class);
       LOGGER.info(getName() + " loaded online with success");
     } catch (IOException ioException) {
       LOGGER.error("failed loading " + getName() + " : " + ioException.getMessage());
-      // ioException.printStackTrace();
     }
   }
 

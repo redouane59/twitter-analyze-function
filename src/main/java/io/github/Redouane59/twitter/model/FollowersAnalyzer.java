@@ -17,13 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 public class FollowersAnalyzer {
 
   private final       TwitterClient      twitterClient;
-  public final static ObjectMapper       OBJECT_MAPPER = new ObjectMapper();
-  public final        List<InfluentUser> INFLUENT_USERS;
+  public final static ObjectMapper       OBJECT_MAPPER  = new ObjectMapper();
+  public final static List<InfluentUser> INFLUENT_USERS = importInfluentUser();
 
 
-  public FollowersAnalyzer(TwitterClient twitterClient, String influencerFilePath) {
+  public FollowersAnalyzer(TwitterClient twitterClient) {
     this.twitterClient = twitterClient;
-    INFLUENT_USERS     = importInfluentUser(influencerFilePath);
   }
 
   public AnalyzeResponse getResponse(Tweet tweet) {
@@ -85,8 +84,8 @@ public class FollowersAnalyzer {
 
   }
 
-  public static List<InfluentUser> importInfluentUser(String filePath) {
-    File file = new File(filePath);
+  public static List<InfluentUser> importInfluentUser() {
+    File file = new File("²/influents_users.json");
     if (file.exists()) {
       try {
         return List.of(OBJECT_MAPPER.readValue(file, InfluentUser[].class));

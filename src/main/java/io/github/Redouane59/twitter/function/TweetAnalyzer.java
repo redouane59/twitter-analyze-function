@@ -13,9 +13,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
 public class TweetAnalyzer implements HttpFunction {
 
   public final static String TWEET_ID = "tweet_id";
@@ -36,7 +38,7 @@ public class TweetAnalyzer implements HttpFunction {
     } catch (IOException e) {
       LOGGER.error("failed reading crendentials file " + e.getMessage());
     }
-    followersAnalyzer = new FollowersAnalyzer(twitterClient, "src/main/resources/influents_users.json");
+    followersAnalyzer = new FollowersAnalyzer(twitterClient);
   }
 
   @Override
@@ -73,5 +75,4 @@ public class TweetAnalyzer implements HttpFunction {
 
 }
 
-// add iron__manxxx
 // gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 8192MB --timeout=540 --allow-unauthenticated
