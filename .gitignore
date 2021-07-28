@@ -6,6 +6,7 @@ target/
 bundle.jar
 src/main/resources/test-twitter-credentials.json
 src/main/resources/test-twitter-credentials2.json
+src/main/resources/twitter-analyze-function-6f2cb54dc911.json
 src/main/resources/users/*
 /.vscode
 /.settings

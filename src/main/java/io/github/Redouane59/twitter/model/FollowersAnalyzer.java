@@ -85,7 +85,8 @@ public class FollowersAnalyzer {
   }
 
   public static List<InfluentUser> importInfluentUser() {
-    File file = new File("²/influents_users.json");
+    LOGGER.info("importInfluentUser()");
+    File file = new File("src/main/resources/influents_users.json");
     if (file.exists()) {
       try {
         return List.of(OBJECT_MAPPER.readValue(file, InfluentUser[].class));
@@ -95,6 +96,6 @@ public class FollowersAnalyzer {
     } else {
       LOGGER.error("file not found");
     }
-    return null;
+    return new ArrayList<>();
   }
 }
