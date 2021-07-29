@@ -18,7 +18,7 @@ public class FollowerFilesManager {
   private static final String projectId  = "twitter-analyze-function";
   private static final String bucketName = "influencer_followers";
 
-  public static String getFollowerFileUrl(String userName) {
+  public static URL getFollowerFileUrl(String userName) {
     try {
       GoogleCredentials
           credentials =
@@ -30,8 +30,7 @@ public class FollowerFilesManager {
                                       .build().getService();
       BlobInfo      blobInfo      = BlobInfo.newBuilder(BlobId.of(bucketName, userName + ".json")).build();
       SignUrlOption signUrlOption = Storage.SignUrlOption.withV4Signature();
-      URL           url           = storage.signUrl(blobInfo, 48, TimeUnit.HOURS, signUrlOption); // @todo failing
-      return url.toURI().toString();
+      return storage.signUrl(blobInfo, 48, TimeUnit.HOURS, signUrlOption);
     } catch (Exception e) {
       LOGGER.error("getFollowerFileUrl exception " + e.getMessage() +
                    "\n" + e.getStackTrace()[0]

@@ -61,27 +61,19 @@ public class InfluentUser extends UserV2 {
 
   private void loadFollowersOnlineFromStorage() {
     try {
-      LOGGER.info("loading followers from Storage");
+      LOGGER.info("loading followers from storage for " + getName());
       followerIds = new HashSet<>();
-      String followerUrl = FollowerFilesManager.getFollowerFileUrl(getName());
-      if (followerUrl == null) { // @todo to remove after
-        LOGGER.error("url null from storage for " + getName());
-        loadFollowersOnlineFromGitHub();
-        return;
-      }
-      LOGGER.info("downloading followers from STORAGE to : " + getName() + ".json");
+      URL followerUrl = FollowerFilesManager.getFollowerFileUrl(getName());
       followerIds = OBJECT_MAPPER.readValue(followerUrl, HashSet.class);
       return;
     } catch (Exception exception) {
-      LOGGER.error("failed downloading " + getName() + ".json : " + exception.getMessage()
-                   + "\n " + exception.getStackTrace()[0]
-                   + "\n" + exception.getStackTrace()[1]);
+      LOGGER.error("failed downloading " + getName() + ".json : " + exception.getMessage());
+      loadFollowersOnlineFromGitHub();
     }
-    loadFollowersOnlineFromGitHub(); // @todo to remove
   }
 
   private void loadFollowersOnlineFromGitHub() {
-    LOGGER.info("loading followers from GitHub");
+    LOGGER.info("loading followers from GitHub for " + getName());
     followerIds = new HashSet<>();
     String jsonUrl = "https://github.com/redouane59/twitter-accounts-data/raw/master/users/followers/" + getName() + ".json";
     try {

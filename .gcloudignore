@@ -12,6 +12,7 @@
 # below:
 .git
 .gitignore
+src/main/resources/users/*
 
 node_modules
 !include:.gitignore

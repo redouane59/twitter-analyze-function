@@ -76,3 +76,5 @@ public class TweetAnalyzer implements HttpFunction {
 }
 
 // gcloud functions deploy twitter-analyze-function --entry-point io.github.Redouane59.twitter.function.TweetAnalyzer --runtime java11 --trigger-http --memory 8192MB --timeout=540 --allow-unauthenticated
+
+//.

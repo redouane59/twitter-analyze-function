@@ -1,16 +1,18 @@
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import io.github.Redouane59.twitter.function.FollowerFilesManager;
+import java.net.URISyntaxException;
+import java.net.URL;
 import org.junit.jupiter.api.Test;
 
 public class FollowerFilesManagerTest {
 
-  private String objectName = "__iron_man_.json";
+  private String userName = "RNational_off";
 
   @Test
-  public void testGetObectUrl() {
-    String result = FollowerFilesManager.getFollowerFileUrl(objectName);
-    System.out.println(result);
+  public void testGetObectUrl() throws URISyntaxException {
+    URL result = FollowerFilesManager.getFollowerFileUrl(userName);
+    System.out.println(result.toURI().toString());
     assertNotNull(result);
   }
 
