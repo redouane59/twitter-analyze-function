@@ -20,7 +20,7 @@ public class LoadMissingFollowersTest {
 
   private TwitterClient
       twitterClient =
-      new TwitterClient(TwitterClient.OBJECT_MAPPER.readValue(new File("src/main/resources/test-twitter-credentials.json"),
+      new TwitterClient(TwitterClient.OBJECT_MAPPER.readValue(new File("../twitter-credentials - RBA.json"),
                                                               TwitterCredentials.class));
 
   public LoadMissingFollowersTest() throws IOException {
@@ -32,7 +32,7 @@ public class LoadMissingFollowersTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    List<String> userNames = List.of("xazalbert");
+    List<String> userNames = List.of("julienbayou", "UPR_Officiel", "Etienne_Chouard");
     System.out.println("\n*** STARTING LOADING FOLLOWERS ***\n");
     for (String userName : userNames) {
       try {
