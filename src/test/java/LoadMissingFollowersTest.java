@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
+@Disabled
 public class LoadMissingFollowersTest {
 
   private TwitterClient
@@ -31,12 +32,12 @@ public class LoadMissingFollowersTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    List<String> userNames = List.of("DIVIZIO1");
+    List<String> userNames = List.of("xazalbert");
     System.out.println("\n*** STARTING LOADING FOLLOWERS ***\n");
     for (String userName : userNames) {
       try {
         User user = twitterClient.getUserFromUserName(userName);
-        System.out.println("anayzing user : " + user.getName() + " id:" + user.getId());
+        System.out.println("anayzing user : " + user.getName() + " / " + user.getId());
         List<String> followers = twitterClient.getFollowersIds(user.getId());
         assertTrue(followers.size() > 0);
         File destFile = new File("../twitter-analyze-function/src/main/resources/users/followers/" + user.getName() + ".json");
@@ -50,6 +51,7 @@ public class LoadMissingFollowersTest {
 
   // @todo add test to check if the follower count is OK
   @Test
+  @Disabled
   public void testInfluentUserCount() {
     FollowersAnalyzer followersAnalyzer = new FollowersAnalyzer(twitterClient);
     System.out.println("");
