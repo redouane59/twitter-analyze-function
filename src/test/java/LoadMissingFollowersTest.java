@@ -32,7 +32,7 @@ public class LoadMissingFollowersTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    List<String> userNames = List.of("julienbayou", "UPR_Officiel", "Etienne_Chouard");
+    List<String> userNames = List.of("dr_l_alexandre");
     System.out.println("\n*** STARTING LOADING FOLLOWERS ***\n");
     for (String userName : userNames) {
       try {
