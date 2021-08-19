@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TweetAnalyzer implements HttpFunction {
 
   public final static String TWEET_ID = "tweet_id";
+  public final static String HASHTAG  = "hashtag";
 
   private TwitterClient     twitterClient;
   private FollowersAnalyzer followersAnalyzer;
@@ -54,22 +56,30 @@ public class TweetAnalyzer implements HttpFunction {
     }
 
     Optional<String> tweetId = request.getFirstQueryParameter(TWEET_ID);
-    if (tweetId.isEmpty()) {
-      writer.write("ERROR : tweet_id parameter missing");
-      return;
+    if (tweetId.isPresent()) {
+      writer.write(analyzeLikes(tweetId.get()));
+    } else {
+      Optional<String> hashtag = request.getFirstQueryParameter(HASHTAG);
+      if (hashtag.isPresent()) {
+        writer.write(analyzeHashtag(hashtag.get()));
+      } else {
+        LOGGER.error("missing parameters for " + request.getPath());
+      }
     }
-
-    Tweet tweet = twitterClient.getTweet(tweetId.get());
-
-    if (tweet.getId() == null) {
-      writer.write("ERROR : tweet not found");
-      return;
-    }
-
-    writer.write(FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getResponse(tweet)));
 
     LOGGER.debug("finished");
 
+  }
+
+  @SneakyThrows
+  public String analyzeLikes(String tweetId) {
+    Tweet tweet = twitterClient.getTweet(tweetId);
+    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getLikeAnalyzeResponse(tweet));
+  }
+
+  @SneakyThrows
+  public String analyzeHashtag(String hashtag) {
+    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getHashtagAnalyzeResponse(hashtag));
   }
 
 

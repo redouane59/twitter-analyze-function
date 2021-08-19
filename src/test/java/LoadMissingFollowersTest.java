@@ -32,12 +32,17 @@ public class LoadMissingFollowersTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    List<String> userNames = List.of("dr_l_alexandre");
+    List<String>
+        userNames =
+        List.of("raoult_didier");
     System.out.println("\n*** STARTING LOADING FOLLOWERS ***\n");
     for (String userName : userNames) {
       try {
         User user = twitterClient.getUserFromUserName(userName);
-        System.out.println("anayzing user : " + user.getName() + " / " + user.getId());
+        System.out.println("  ,{\n"
+                           + "    \"name\": \"" + user.getName() + "\",\n"
+                           + "    \"id\": " + user.getId() + "\n"
+                           + "  }");
         List<String> followers = twitterClient.getFollowersIds(user.getId());
         assertTrue(followers.size() > 0);
         File destFile = new File("../twitter-analyze-function/src/main/resources/users/followers/" + user.getName() + ".json");
