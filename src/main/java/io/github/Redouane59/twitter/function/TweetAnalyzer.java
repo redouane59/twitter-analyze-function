@@ -3,6 +3,8 @@ package io.github.Redouane59.twitter.function;
 import com.google.cloud.functions.HttpFunction;
 import com.google.cloud.functions.HttpRequest;
 import com.google.cloud.functions.HttpResponse;
+import io.github.Redouane59.twitter.model.ActionType;
+import io.github.Redouane59.twitter.model.AnalyzeResponse;
 import io.github.Redouane59.twitter.model.FollowersAnalyzer;
 import io.github.redouane59.twitter.TwitterClient;
 import io.github.redouane59.twitter.dto.tweet.Tweet;
@@ -21,8 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public class TweetAnalyzer implements HttpFunction {
 
-  public final static String TWEET_ID = "tweet_id";
-  public final static String HASHTAG  = "hashtag";
+  public final static String TWEET_ID    = "tweet_id";
+  public final static String HASHTAG     = "hashtag";
+  public final static String ACTION_TYPE = "action_type";
 
   private TwitterClient     twitterClient;
   private FollowersAnalyzer followersAnalyzer;
@@ -55,13 +58,15 @@ public class TweetAnalyzer implements HttpFunction {
       }
     }
 
-    Optional<String> tweetId = request.getFirstQueryParameter(TWEET_ID);
+    Optional<String> tweetId    = request.getFirstQueryParameter(TWEET_ID);
+    ActionType       actionType = ActionType.findByValue(request.getFirstQueryParameter(ACTION_TYPE).orElse(ActionType.LIKE.name()));
+
     if (tweetId.isPresent()) {
-      writer.write(analyzeLikes(tweetId.get()));
+      writer.write(analyzeLikes(tweetId.get(), actionType));
     } else {
       Optional<String> hashtag = request.getFirstQueryParameter(HASHTAG);
       if (hashtag.isPresent()) {
-        writer.write(analyzeHashtag(hashtag.get()));
+        writer.write(analyzeHashtag(hashtag.get(), actionType));
       } else {
         LOGGER.error("missing parameters for " + request.getPath());
       }
@@ -72,14 +77,15 @@ public class TweetAnalyzer implements HttpFunction {
   }
 
   @SneakyThrows
-  public String analyzeLikes(String tweetId) {
+  public String analyzeLikes(String tweetId, ActionType actionType) {
     Tweet tweet = twitterClient.getTweet(tweetId);
-    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getLikeAnalyzeResponse(tweet));
+    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getTweetAnalyzeResponse(tweet, actionType));
   }
 
   @SneakyThrows
-  public String analyzeHashtag(String hashtag) {
-    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getHashtagAnalyzeResponse(hashtag));
+  public String analyzeHashtag(String hashtag, ActionType actionType) {
+    AnalyzeResponse analyzeResponse = followersAnalyzer.getHashtagAnalyzeResponse(hashtag, actionType);
+    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(analyzeResponse);
   }
 
 

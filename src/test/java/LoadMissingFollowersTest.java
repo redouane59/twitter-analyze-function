@@ -1,6 +1,10 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient;
+import com.github.scribejava.httpclient.okhttp.OkHttpHttpClientConfig;
+import io.github.Redouane59.twitter.cache.CacheInterceptor;
 import io.github.Redouane59.twitter.model.FollowersAnalyzer;
 import io.github.Redouane59.twitter.model.InfluentUser;
 import io.github.redouane59.twitter.TwitterClient;
@@ -11,17 +15,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient.Builder;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 
 @Slf4j
 @Disabled
 public class LoadMissingFollowersTest {
 
-  private TwitterClient
-      twitterClient =
-      new TwitterClient(TwitterClient.OBJECT_MAPPER.readValue(new File("../twitter-credentials - RBA.json"),
-                                                              TwitterCredentials.class));
+  private TwitterCredentials twitterCredentials = TwitterClient.OBJECT_MAPPER.readValue(new File("../twitter-credentials - RBA.json"),
+                                                                                        TwitterCredentials.class);
+  private TwitterClient      twitterClient      = new TwitterClient(twitterCredentials, getServiceBuilder(twitterCredentials.getApiKey()));
+
 
   public LoadMissingFollowersTest() throws IOException {
   }
@@ -34,7 +41,7 @@ public class LoadMissingFollowersTest {
 
     List<String>
         userNames =
-        List.of("raoult_didier");
+        List.of("idrissaberkane");
     System.out.println("\n*** STARTING LOADING FOLLOWERS ***\n");
     for (String userName : userNames) {
       try {
@@ -93,6 +100,18 @@ public class LoadMissingFollowersTest {
       LOGGER.debug("followers ids OK for " + influencer.getName());
       return true;
     }
+  }
+
+  private ServiceBuilder getServiceBuilder(String apiKey) {
+    long   cacheSize = 1024L * 1024 * 1024 * 8; // 8go
+    String path      = "../okhttpCache";
+    File   file      = new File(path);
+    Builder httpBuilder = new Builder()
+        .addNetworkInterceptor(new CacheInterceptor())
+        .cache(new Cache(file, cacheSize));
+    OkHttpHttpClient okHttpClient = new OkHttpHttpClient(new OkHttpHttpClientConfig(httpBuilder));
+    return new ServiceBuilder(apiKey)
+        .httpClient(okHttpClient);
   }
 
 }

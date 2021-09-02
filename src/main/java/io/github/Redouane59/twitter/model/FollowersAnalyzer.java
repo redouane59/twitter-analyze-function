@@ -1,11 +1,11 @@
 package io.github.Redouane59.twitter.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.redouane59.twitter.TwitterClient;
 import io.github.redouane59.twitter.dto.endpoints.AdditionalParameters;
 import io.github.redouane59.twitter.dto.tweet.Tweet;
 import io.github.redouane59.twitter.dto.tweet.TweetList;
-import io.github.redouane59.twitter.dto.tweet.TweetV2;
 import io.github.redouane59.twitter.dto.tweet.TweetV2.TweetData;
 import io.github.redouane59.twitter.dto.user.UserList;
 import io.github.redouane59.twitter.dto.user.UserV2.UserData;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FollowersAnalyzer {
 
   private final       TwitterClient      twitterClient;
-  public final static ObjectMapper       OBJECT_MAPPER  = new ObjectMapper();
+  public final static ObjectMapper       OBJECT_MAPPER  = new ObjectMapper().setSerializationInclusion(Include.NON_NULL);
   public final static List<InfluentUser> INFLUENT_USERS = importInfluentUser();
 
 
@@ -30,18 +30,23 @@ public class FollowersAnalyzer {
     this.twitterClient = twitterClient;
   }
 
-  public AnalyzeResponse getLikeAnalyzeResponse(Tweet tweet) {
+  public AnalyzeResponse getTweetAnalyzeResponse(Tweet tweet, ActionType actionType) {
     AnalyzeResponse analyzeResponse = AnalyzeResponse.builder().tweet(tweet).build();
     if (tweet.getId() == null) {
       return analyzeResponse;
     }
 
-    // likes
-    UserList likers = twitterClient.getLikingUsers(tweet.getId());
-    if (likers.getData() != null && INFLUENT_USERS.size() > 0) {
+    UserList users;
+    // retweet analyse
+    if (actionType == ActionType.RETWEET) {
+      users = twitterClient.getRetweetingUsers(tweet.getId());
+    } else { // like analyse
+      users = twitterClient.getLikingUsers(tweet.getId());
+    }
+    if (users.getData() != null && INFLUENT_USERS.size() > 0) {
       // influenceurs
       LinkedHashMap<String, Integer> mostFollowedInfluencers =
-          getMostFollowedInfluencers(likers.getData().stream().map(UserData::getId).collect(Collectors.toList()));
+          getMostFollowedInfluencers(users.getData().stream().map(UserData::getId).collect(Collectors.toList()));
       int           i            = 0;
       int           maxValue     = 10;
       StringBuilder followerText = new StringBuilder();
@@ -49,7 +54,7 @@ public class FollowersAnalyzer {
       for (Map.Entry<String, Integer> entry : mostFollowedInfluencers.entrySet()) {
         if (i < maxValue) {
           int nbFollows  = entry.getValue();
-          int percentage = 100 * nbFollows / likers.getData().size();
+          int percentage = 100 * nbFollows / users.getData().size();
           entry.setValue(percentage);
           i++;
         } else {
@@ -58,25 +63,44 @@ public class FollowersAnalyzer {
       }
 
       analyzeResponse.setMostFollowedInfluencers(mostFollowedInfluencers);
-      analyzeResponse.setUserStatistics(UserStatisticsCollector.getUserStatistics(likers.getData()));
+      analyzeResponse.setUserStatistics(UserStatisticsCollector.getUserStatistics(users.getData()));
     }
 
     return analyzeResponse;
   }
 
-  public AnalyzeResponse getHashtagAnalyzeResponse(String hashtag) {
+  public AnalyzeResponse getHashtagAnalyzeResponse(String hashtag, ActionType actionType) {
     AnalyzeResponse
         analyzeResponse =
-        AnalyzeResponse.builder().tweet(TweetV2.builder().data(TweetData.builder().text(hashtag).build()).build()).build();
+        AnalyzeResponse.builder().build();
     if (hashtag == null || hashtag.isEmpty()) {
       return analyzeResponse;
     }
     hashtag = hashtag.replace("#", "");
-    // tweets
-    TweetList
-        tweetList =
-        twitterClient.searchTweets("#" + hashtag + " -is:retweet", AdditionalParameters.builder().recursiveCall(false).maxResults(100).build());
 
+    String query = "#" + hashtag + " -is:retweet lang:fr";
+    if (actionType != null) {
+      switch (actionType) {
+        case RETWEET:
+          query = "#" + hashtag + " is:retweet lang:fr";
+          break;
+        case TWEET:
+          query = "#" + hashtag + " -is:retweet lang:fr";
+          break;
+        case QUOTE:
+          query = "#" + hashtag + " is:quote -is:retweet lang:fr";
+          break;
+        case REPLY:
+          query = "#" + hashtag + " is:reply -is:retweet lang:fr";
+          break;
+        default:
+          query = "#" + hashtag + " -is:retweet lang:fr";
+      }
+    }
+
+    // tweets
+    TweetList tweetList =
+        twitterClient.searchTweets(query, AdditionalParameters.builder().recursiveCall(false).maxResults(100).build());
     if (tweetList.getData() != null && INFLUENT_USERS.size() > 0) {
       List<String> hashtagUserIds = tweetList.getData().stream().map(TweetData::getAuthorId).collect(Collectors.toList());
 
@@ -99,6 +123,8 @@ public class FollowersAnalyzer {
 
       analyzeResponse.setMostFollowedInfluencers(mostFollowedInfluencers);
       // no userstatistics here because user object empty in searches
+      analyzeResponse.setUserStatistics(UserStatistics.builder().build());
+      analyzeResponse.setHashtagsCount(tweetList.getData().size());
     }
 
     return analyzeResponse;

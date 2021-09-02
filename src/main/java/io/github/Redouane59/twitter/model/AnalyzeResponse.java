@@ -14,5 +14,6 @@ public class AnalyzeResponse {
   LinkedHashMap<String, Integer> mostFollowedInfluencers;
   private UserStatistics userStatistics;
   private Tweet          tweet;
+  private int            hashtagsCount;
 
 }
