@@ -26,6 +26,7 @@ public class TweetAnalyzer implements HttpFunction {
   public final static String TWEET_ID    = "tweet_id";
   public final static String HASHTAG     = "hashtag";
   public final static String ACTION_TYPE = "action_type";
+  public final static String MAX_RESULTS = "max_results";
 
   private TwitterClient     twitterClient;
   private FollowersAnalyzer followersAnalyzer;
@@ -60,9 +61,9 @@ public class TweetAnalyzer implements HttpFunction {
 
     Optional<String> tweetId    = request.getFirstQueryParameter(TWEET_ID);
     ActionType       actionType = ActionType.findByValue(request.getFirstQueryParameter(ACTION_TYPE).orElse(ActionType.LIKE.name()));
-
+    int maxResults = Integer.parseInt(request.getFirstQueryParameter(MAX_RESULTS).orElse("100"));
     if (tweetId.isPresent()) {
-      writer.write(analyzeLikes(tweetId.get(), actionType));
+      writer.write(analyzeReactions(tweetId.get(), actionType, maxResults));
     } else {
       Optional<String> hashtag = request.getFirstQueryParameter(HASHTAG);
       if (hashtag.isPresent()) {
@@ -77,9 +78,9 @@ public class TweetAnalyzer implements HttpFunction {
   }
 
   @SneakyThrows
-  public String analyzeLikes(String tweetId, ActionType actionType) {
+  public String analyzeReactions(String tweetId, ActionType actionType, int maxResults) {
     Tweet tweet = twitterClient.getTweet(tweetId);
-    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getTweetAnalyzeResponse(tweet, actionType));
+    return FollowersAnalyzer.OBJECT_MAPPER.writeValueAsString(followersAnalyzer.getTweetAnalyzeResponse(tweet, actionType, maxResults));
   }
 
   @SneakyThrows

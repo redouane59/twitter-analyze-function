@@ -4,10 +4,6 @@
     "id": 78085410
   },
   {
-    "name": "GroupeID_FR",
-    "id": 4782667416
-  },
-  {
     "name": "MLP_officiel",
     "id": 217749896
   },
@@ -32,10 +28,6 @@
     "id": 978184280
   },
   {
-    "name": "JeanMessiha",
-    "id": 456777022
-  },
-  {
     "name": "RobertMenardFR",
     "id": 1132342340
   },
@@ -50,10 +42,6 @@
   {
     "name": "louis_aliot",
     "id": 316956459
-  },
-  {
-    "name": "DLF_Officiel",
-    "id": 1435970071
   },
   {
     "name": "dupontaignan",
@@ -72,10 +60,6 @@
     "id": 258345629
   },
   {
-    "name": "nk_m",
-    "id": 20702279
-  },
-  {
     "name": "FrancoisFillon",
     "id": 551669623
   },
@@ -86,10 +70,6 @@
   {
     "name": "laurentwauquiez",
     "id": 19438626
-  },
-  {
-    "name": "jf_cope",
-    "id": 105116603
   },
   {
     "name": "nadine__morano",
@@ -200,10 +180,6 @@
     "id": 2967623435
   },
   {
-    "name": "MartineAubry",
-    "id": 26031424
-  },
-  {
     "name": "socialistesAN",
     "id": 201737230
   },
@@ -266,10 +242,6 @@
   {
     "name": "MadjidFalastine",
     "id": 39083212
-  },
-  {
-    "name": "NPA_officiel",
-    "id": 2273166283
   },
   {
     "name": "PhilippePoutou",
@@ -420,10 +392,6 @@
     "id": 1156774764
   },
   {
-    "name": "LaurentBouvet",
-    "id": 76103961
-  },
-  {
     "name": "Aminelkhatmi",
     "id": 47336512
   },
@@ -454,10 +422,6 @@
   {
     "name": "alexiscorbiere",
     "id": 266215308
-  },
-  {
-    "name": "__iron_man_",
-    "id": 1373051236258357251
   },
   {
     "name": "benallaoff",
@@ -568,10 +532,6 @@
     "id": 499856023
   },
   {
-    "name": "mariekirschen",
-    "id": 47936341
-  },
-  {
     "name": "AudreyPulvar",
     "id": 2755183484
   },
@@ -584,10 +544,6 @@
     "id": 4382914283
   },
   {
-    "name": "_HaniRamadan",
-    "id": 1623244765
-  },
-  {
     "name": "AmezianeRose",
     "id": 1035208693414023168
   },
@@ -596,20 +552,12 @@
     "id": 836198637923352576
   },
   {
-    "name": "ADM_Action",
-    "id": 728558123124985856
-  },
-  {
     "name": "Le_CRIF",
     "id": 308412056
   },
   {
     "name": "mbompard",
     "id": 250323361
-  },
-  {
-    "name": "TariqRamadan",
-    "id": 141255641
   },
   {
     "name": "celine_pina",
@@ -668,10 +616,6 @@
     "id": 1283018743
   },
   {
-    "name": "medef",
-    "id": 15969561
-  },
-  {
     "name": "yjadot",
     "id": 117761523
   },
@@ -708,10 +652,6 @@
     "id": 353732330
   },
   {
-    "name": "IllanaWeizman",
-    "id": 2268739464
-  },
-  {
     "name": "StephanTroussel",
     "id": 366600524
   },
@@ -726,14 +666,6 @@
   {
     "name": "DidierMaisto",
     "id": 1067293921452179456
-  },
-  {
-    "name": "Benjam1Lucas",
-    "id": 326680674
-  },
-  {
-    "name": "STaillePolian",
-    "id": 2493992654
   },
   {
     "name": "SamGontier",
@@ -754,5 +686,146 @@
   {
     "name": "idrissaberkane",
     "id": 2194243029
+  },
+  {
+    "name": "montebourg",
+    "id": 69255422
+  },
+  {
+    "name": "CaronAymericoff",
+    "id": 714829913619099648
+  },
+  {
+    "name": "olbesancenot",
+    "id": 947601090
+  },
+  {
+    "name": "BenoitPayan",
+    "id": 418980385
+  },
+  {
+    "name": "Johanna_Rolland",
+    "id": 786659233
+  },
+  {
+    "name": "JRochedy",
+    "id": 163951423
+  },
+  {
+    "name": "lepenjm",
+    "id": 1206108030
+  },
+  {
+    "name": "fxbellamy",
+    "id": 261860968
+  },
+  {
+    "name": "MatZagrodzki",
+    "id": 806517235
+  },
+  {
+    "name": "philippeherlin",
+    "id": 59063574
+  },
+  {
+    "name": "pierre_plottu",
+    "id": 1307084203
+  },
+  {
+    "name": "faizaz",
+    "id": 76521922
+  },
+  {
+    "name": "Drmartyufml",
+    "id": 552494536
+  },
+  {
+    "name": "NnoMan1",
+    "id": 152989842
+  },
+  {
+    "name": "LDH_Fr",
+    "id": 85182410
+  },
+  {
+    "name": "Ugobernalicis",
+    "id": 152382594
+  },
+  {
+    "next": "next!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+    "name": "nicolasberrod",
+    "id": 148034143
+  },
+  {
+    "name": "SamiaGhali",
+    "id": 1435362097
+  },
+  {
+    "name": "MarsaultBreum",
+    "id": 1122078019282264064
+  },
+  {
+    "name": "kevinbossuet",
+    "id": 308323017
+  },
+  {
+    "name": "Valek_Noraj",
+    "id": 1561194877
+  },
+  {
+    "name": "LouisWitter",
+    "id": 365251227
+  },
+  {
+    "name": "alirabeh",
+    "id": 305495377
+  },
+  {
+    "name": "MartinBlachier",
+    "id": 1309804418154536960
+  },
+  {
+    "name": "fredhermel",
+    "id": 110850885
+  },
+  {
+    "name": "ophmeunier",
+    "id": 385379344
+  },
+  {
+    "name": "DanielRiolo",
+    "id": 360668525
+  },
+  {
+    "name": "YLeBolloch",
+    "id": 377424425
+  },
+  {
+    "name": "veroniquegenest",
+    "id": 286840245
+  },
+  {
+    "name": "stanislasrig",
+    "id": 1038091753411293185
+  },
+  {
+    "name": "SophiaAram",
+    "id": 200814625
+  },
+  {
+    "name": "apollineWakeUp",
+    "id": 148583252
+  },
+  {
+    "name": "NassiraELM",
+    "id": 19990293
+  },
+  {
+    "name": "ChdOrnellas",
+    "id": 1350083185774891010
+  },
+  {
+    "name": "Bruno_Attal_",
+    "id": 1433048743687905280
   }
 ]

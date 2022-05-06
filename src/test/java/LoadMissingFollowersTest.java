@@ -25,9 +25,14 @@ import org.junit.jupiter.api.Test;
 @Disabled
 public class LoadMissingFollowersTest {
 
-  private TwitterCredentials twitterCredentials = TwitterClient.OBJECT_MAPPER.readValue(new File("../twitter-credentials - RBA.json"),
-                                                                                        TwitterCredentials.class);
-  private TwitterClient      twitterClient      = new TwitterClient(twitterCredentials, getServiceBuilder(twitterCredentials.getApiKey()));
+  private TwitterCredentials
+                        twitterCredentials  =
+      TwitterClient.OBJECT_MAPPER.readValue(new File("../twitter-credentials - RBA.json"), TwitterCredentials.class);
+  private TwitterCredentials
+                        twitterCredentials2 =
+      TwitterClient.OBJECT_MAPPER.readValue(new File("../twitter-credentials - RTO.json"), TwitterCredentials.class);
+  private TwitterClient twitterClient       = new TwitterClient(twitterCredentials, getServiceBuilder(twitterCredentials.getApiKey()));
+  private TwitterClient twitterClient2      = new TwitterClient(twitterCredentials2, getServiceBuilder(twitterCredentials.getApiKey()));
 
 
   public LoadMissingFollowersTest() throws IOException {
@@ -40,17 +45,23 @@ public class LoadMissingFollowersTest {
     ObjectMapper mapper = new ObjectMapper();
 
     List<String>
-        userNames =
-        List.of("idrissaberkane");
+        userNames = List.of("Bruno_Attal_");
     System.out.println("\n*** STARTING LOADING FOLLOWERS ***\n");
+    int i = 0;
     for (String userName : userNames) {
+      System.out.println("\n" + userName);
       try {
         User user = twitterClient.getUserFromUserName(userName);
         System.out.println("  ,{\n"
                            + "    \"name\": \"" + user.getName() + "\",\n"
                            + "    \"id\": " + user.getId() + "\n"
                            + "  }");
-        List<String> followers = twitterClient.getFollowersIds(user.getId());
+        List<String> followers;
+        if (i % 2 == 0) {
+          followers = twitterClient.getFollowersIds(user.getId());
+        } else {
+          followers = twitterClient2.getFollowersIds(user.getId());
+        }
         assertTrue(followers.size() > 0);
         File destFile = new File("../twitter-analyze-function/src/main/resources/users/followers/" + user.getName() + ".json");
         mapper.writeValue(destFile, followers);
@@ -58,6 +69,7 @@ public class LoadMissingFollowersTest {
       } catch (Exception e) {
         LOGGER.error(e.getMessage());
       }
+      i++;
     }
   }
 
@@ -69,6 +81,7 @@ public class LoadMissingFollowersTest {
     System.out.println("");
     for (InfluentUser influentUser : followersAnalyzer.INFLUENT_USERS) {
       boolean reliable = isFollowersIdsDataReliable(influentUser);
+      System.out.println(influentUser.getName() + " " + reliable);
     }
     System.out.println("");
   }
@@ -92,9 +105,9 @@ public class LoadMissingFollowersTest {
                    + influencer.getName()
                    + " ("
                    + offlineFollowersCount
-                   + " ids VS "
+                   + " -> "
                    + apiFollowersCount
-                   + " followers ");
+                   + " ) ");
       return false;
     } else {
       LOGGER.debug("followers ids OK for " + influencer.getName());

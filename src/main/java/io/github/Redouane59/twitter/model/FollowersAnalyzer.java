@@ -25,12 +25,11 @@ public class FollowersAnalyzer {
   public final static ObjectMapper       OBJECT_MAPPER  = new ObjectMapper().setSerializationInclusion(Include.NON_NULL);
   public final static List<InfluentUser> INFLUENT_USERS = importInfluentUser();
 
-
   public FollowersAnalyzer(TwitterClient twitterClient) {
     this.twitterClient = twitterClient;
   }
 
-  public AnalyzeResponse getTweetAnalyzeResponse(Tweet tweet, ActionType actionType) {
+  public AnalyzeResponse getTweetAnalyzeResponse(Tweet tweet, ActionType actionType, int maxResults) {
     AnalyzeResponse analyzeResponse = AnalyzeResponse.builder().tweet(tweet).build();
     if (tweet.getId() == null) {
       return analyzeResponse;
@@ -39,22 +38,21 @@ public class FollowersAnalyzer {
     UserList users;
     // retweet analyse
     if (actionType == ActionType.RETWEET) {
-      users = twitterClient.getRetweetingUsers(tweet.getId());
+      users = twitterClient.getRetweetingUsers(tweet.getId(), maxResults);
     } else { // like analyse
-      users = twitterClient.getLikingUsers(tweet.getId());
+      users = twitterClient.getLikingUsers(tweet.getId(), maxResults);
     }
     if (users.getData() != null && INFLUENT_USERS.size() > 0) {
+      analyzeResponse.setLikesAnalyzed(users.getData().size());
       // influenceurs
       LinkedHashMap<String, Integer> mostFollowedInfluencers =
           getMostFollowedInfluencers(users.getData().stream().map(UserData::getId).collect(Collectors.toList()));
       int           i            = 0;
       int           maxValue     = 10;
-      StringBuilder followerText = new StringBuilder();
-      followerText.append("Top 10 des personnalités suivies :");
       for (Map.Entry<String, Integer> entry : mostFollowedInfluencers.entrySet()) {
         if (i < maxValue) {
           int nbFollows  = entry.getValue();
-          int percentage = 100 * nbFollows / users.getData().size();
+          int percentage = (int)Math.round(100 * nbFollows / (double)users.getData().size());
           entry.setValue(percentage);
           i++;
         } else {
